@@ -1,0 +1,1791 @@
+{
+  "info": {
+    "_postman_id": "2232f263-b866-4d79-ab29-81c8f532979b",
+    "name": "Irdeto Account Manager - External API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39668192",
+    "_collection_link": "https://go.postman.co/collection/40231071-2232f263-b866-4d79-ab29-81c8f532979b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "Healthcheck",
+          "item": [
+            {
+              "name": "Healthcheck",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/healthcheck",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "healthcheck"
+                  ]
+                },
+                "description": "Health Check"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Accounts",
+          "item": [
+            {
+              "name": "get-account",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": ""
+                    }
+                  ]
+                },
+                "description": "Create Account"
+              },
+              "response": []
+            },
+            {
+              "name": "create-account",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountId\": \"{{account_id}}\",\n  \"type\": \"<string>\",\n  \"category\": \"<string>\",\n  \"group\": \"<string>\",\n  \"timezone\": \"<string>\",\n  \"pin\": \"0505\",\n  \"status\": \"active\",\n  \"blockReason\": \"<string>\",\n  \"blocked\": false,\n  \"profilesEnabled\": false,\n  \"country\": \"<string>\",\n  \"stateName\": \"<string>\",\n  \"regionName\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"features\": {\n    \"tvodEnabled\": false,\n    \"ppvEnabled\": false,\n    \"cdvrEnabled\": false,\n    \"restartTvEnabled\": false,\n    \"thirdPartyAppsEnabled\": false,\n    \"smartTvEnabled\": false\n  },\n  \"quotas\": {\n    \"maxDevices\": 5,\n    \"maxSmallScreenDevices\": 3,\n    \"maxLargeScreenDevices\": 2,\n    \"maxConcurrentDevices\": 2,\n    \"maxConcurrentSmallScreenDevices\": 1,\n    \"maxConcurrentLargeScreenDevices\": 1,\n    \"maxProfiles\": 5,\n    \"cdvr\": 100,\n    \"tvod\": 10\n  },\n  \"devices\": [\n    {\n      \"deviceId\": \"<string>\",\n      \"fullType\": \"<string>\",\n      \"bouquetId\": \"<string>\",\n      \"subscriberId\": \"<string>\",\n      \"entitlements\": [\n        {\n          \"offerId\": \"<string>\",\n          \"startDate\": \"2025-01-01T00:00:00.000Z\",\n          \"endDate\": \"2025-12-31T23:59:59.000Z\",\n          \"priority\": true\n        }\n      ]\n    }\n  ],\n  \"entitlements\": [\n    {\n      \"offerId\": \"<string>\",\n      \"startDate\": \"2025-01-01T00:00:00.000Z\",\n      \"endDate\": \"2025-12-31T23:59:59.000Z\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts"
+                  ]
+                },
+                "description": "Create Account"
+              },
+              "response": []
+            },
+            {
+              "name": "create-account MINIMAL",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountId\": \"{{account_id}}\",\n  \"type\": \"<string>\",\n  \"category\": \"<string>\",\n  \"group\": \"<string>\",\n  \"timezone\": \"<string>\",\n  \"pin\": \"0505\",\n  \"status\": \"active\",\n  \"blockReason\": \"<string>\",\n  \"blocked\": false,\n  \"profilesEnabled\": false,\n  \"country\": \"<string>\",\n  \"stateName\": \"<string>\",\n  \"regionName\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"features\": {\n    \"tvodEnabled\": false,\n    \"ppvEnabled\": false,\n    \"cdvrEnabled\": false,\n    \"restartTvEnabled\": false,\n    \"thirdPartyAppsEnabled\": false,\n    \"smartTvEnabled\": false\n  },\n  \"quotas\": {\n    \"maxDevices\": 5,\n    \"maxSmallScreenDevices\": 3,\n    \"maxLargeScreenDevices\": 2,\n    \"maxConcurrentDevices\": 2,\n    \"maxConcurrentSmallScreenDevices\": 1,\n    \"maxConcurrentLargeScreenDevices\": 1,\n    \"maxProfiles\": 5,\n    \"cdvr\": 100,\n    \"tvod\": 10\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts"
+                  ]
+                },
+                "description": "Create Account"
+              },
+              "response": []
+            },
+            {
+              "name": "update-account",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group\": \"<string>\",\n  \"timezone\": \"<string>\",\n  \"pin\": \"6056\",\n  \"status\": \"active\",\n  \"blockReason\": \"<string>\",\n  \"blocked\": false,\n  \"profilesEnabled\": false,\n  \"country\": \"<string>\",\n  \"stateName\": \"<string>\",\n  \"regionName\": \"<string>\",\n  \"zipCode\": \"<string>\",\n  \"features\": {\n    \"tvodEnabled\": false,\n    \"ppvEnabled\": false,\n    \"cdvrEnabled\": false,\n    \"restartTvEnabled\": false,\n    \"thirdPartyAppsEnabled\": false,\n    \"smartTvEnabled\": false\n  },\n  \"quotas\": {\n    \"maxDevices\": 5,\n    \"maxSmallScreenDevices\": 3,\n    \"maxLargeScreenDevices\": 2,\n    \"maxConcurrentDevices\": 2,\n    \"maxConcurrentSmallScreenDevices\": 1,\n    \"maxConcurrentLargeScreenDevices\": 1,\n    \"maxProfiles\": 5,\n    \"cdvr\": 100,\n    \"tvod\": 10\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    }
+                  ]
+                },
+                "description": "Update Account"
+              },
+              "response": []
+            },
+            {
+              "name": "delete-account",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    }
+                  ]
+                },
+                "description": "Delete Account"
+              },
+              "response": []
+            },
+            {
+              "name": "reset-account-pin",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pin\": \"6310\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/reset-pin",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "reset-pin"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    }
+                  ]
+                },
+                "description": "Reset PIN"
+              },
+              "response": []
+            },
+            {
+              "name": "refresh-entitlements",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/refresh-entitlements",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "refresh-entitlements"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    }
+                  ]
+                },
+                "description": "Refresh account Entitlements"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Account Entitlements (Offers)",
+          "item": [
+            {
+              "name": "add-account-entitlements (offers)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"offerId\": \"<string>\",\n    \"startDate\": \"Current time\",\n    \"endDate\": \"<dateTime>\",\n    \"priority\": true\n  },\n  {\n    \"offerId\": \"<string>\",\n    \"startDate\": \"Current time\",\n    \"endDate\": \"<dateTime>\",\n    \"priority\": true\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/entitlements",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "entitlements"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    }
+                  ]
+                },
+                "description": "Add entitlements"
+              },
+              "response": []
+            },
+            {
+              "name": "delete-account-entitlement (offer)",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/entitlements/:entitlementId?priority=true",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "entitlements",
+                    ":entitlementId"
+                  ],
+                  "query": [
+                    {
+                      "key": "priority",
+                      "value": "true",
+                      "description": "Priority flag"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "entitlementId",
+                      "value": "{{entitlementId}}",
+                      "description": "(Required) Entitlement Id"
+                    }
+                  ]
+                },
+                "description": "Delete entitlement"
+              },
+              "response": []
+            },
+            {
+              "name": "delete-account-offer",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/offers/:offerId?priority=true",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "offers",
+                    ":offerId"
+                  ],
+                  "query": [
+                    {
+                      "key": "priority",
+                      "value": "true",
+                      "description": "Priority flag"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "offerId",
+                      "value": "{{offer_id}}",
+                      "description": "(Required) Offer Id"
+                    }
+                  ]
+                },
+                "description": "Delete entitlement"
+              },
+              "response": []
+            },
+            {
+              "name": "update-account-entitlement (offer)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offerId\": \"<string>\",\n  \"startDate\": \"2025-01-01T00:00:00.000Z\",\n  \"endDate\": \"2025-12-31T23:59:59.000Z\",\n  \"priority\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/entitlements/:entitlementId",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "entitlements",
+                    ":entitlementId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "entitlementId",
+                      "value": "{{entitlement_id}}",
+                      "description": "(Required) Entitlement Id"
+                    }
+                  ]
+                },
+                "description": "Add entitlement"
+              },
+              "response": []
+            },
+            {
+              "name": "overwrite-account-entitlements (Sync Entitlements/Offers)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"offerId\": \"<string>\",\n    \"startDate\": \"Current time\",\n    \"endDate\": \"<dateTime>\",\n    \"priority\": true\n  },\n  {\n    \"offerId\": \"<string>\",\n    \"startDate\": \"Current time\",\n    \"endDate\": \"<dateTime>\",\n    \"priority\": true\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/sync-entitlements",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "sync-entitlements"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    }
+                  ]
+                },
+                "description": "Overwrite entitlements"
+              },
+              "response": []
+            },
+            {
+              "name": "delete-all-account-entitlements (offers)",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/entitlements?priority=true",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "entitlements"
+                  ],
+                  "query": [
+                    {
+                      "key": "priority",
+                      "value": "true",
+                      "description": "Priority flag"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    }
+                  ]
+                },
+                "description": "Delete All Account Entitlements"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Provisioned Devices",
+          "item": [
+            {
+              "name": "import-provisioned-devices",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"deviceId\": \"030420c9-c643-46ec-b0d5-9b19cd02cd11\",\n    \"deviceFamilyId\": \"ur2\", \n     \"manufacturer\": \"Acme\",\n    \"manufacturerModel\": \"CableBox Pro\",\n    \"osName\": \"Android TV\",\n    \"osVersion\": \"10\",\n    \"appVersion\": \"1.5.7\",\n    \"friendlyName\": \"Room STB 1\",\n    \"drmLevel\": \"L3\",\n    \"drmType\": \"Widevine\",\n    \"ottType\": \"Hybrid\",\n    \"fullType\": \"DVB-C Hybrid\",\n    \"deviceFullType\": \"CableBox Pro DVB-C\",\n    \"managed\": true,\n    \"maxResolution\": 1080,\n \"audioCodecEac3\": true,\n \"audioCodecAc3\": true,\n \"videoCodecHevc\": true,\n    \"lastConnectedTime\": 1710333100,\n    \"enabled\": true,\n    \"hwAddress\": \"00:1D:3F:4B:5C:28\",\n    \"lnbType\": \"None\",\n    \"lnbLoFreq\": 0,\n    \"softwareVersion\": \"3.3.1\",\n    \"rainFadeCompensationType\": \"None\",\n    \"netflixEsn\": \"JKL-STB-24836719629\",\n    \"deviceSerialNumber\": \"SN24836719629\",\n    \"vsmc\": \"74836719629\",\n    \"operatorPrefix\": \"GHI\",\n    \"cdsn\": \"24836719629\"\n  },\n  {\n    \"deviceId\": \"fa8a896d-ed78-45a8-a376-2ffcf9ff8d3c\",\n    \"deviceFamilyId\": \"ur2\",\n        \"manufacturer\": \"Acme\",\n    \"manufacturerModel\": \"CableBox Pro\",\n    \"osName\": \"Android TV\",\n    \"osVersion\": \"10\",\n    \"appVersion\": \"1.5.7\",\n    \"friendlyName\": \"Room STB 2\",\n    \"drmLevel\": \"L3\",\n    \"drmType\": \"Widevine\",\n    \"ottType\": \"Hybrid\",\n    \"fullType\": \"DVB-C Hybrid\",\n    \"deviceFullType\": \"CableBox Pro DVB-C\",\n    \"managed\": true,\n    \"maxResolution\": 1080,\n \"audioCodecEac3\": true,\n \"audioCodecAc3\": true,\n \"videoCodecHevc\": true,\n    \"lastConnectedTime\": 1710333100,\n    \"enabled\": true,\n    \"hwAddress\": \"00:1D:3F:4B:5C:95\",\n    \"lnbType\": \"None\",\n    \"lnbLoFreq\": 0,\n    \"softwareVersion\": \"3.3.1\",\n    \"rainFadeCompensationType\": \"None\",\n    \"netflixEsn\": \"JKL-STB-92468180216\",\n    \"deviceSerialNumber\": \"SN92468180216\",\n    \"vsmc\": \"72468180216\",\n    \"operatorPrefix\": \"GHI\",\n    \"cdsn\": \"92468180216\"\n  },\n  {\n    \"deviceId\": \"38cf8ef4-edf7-47d9-af20-9a6e61144982\",\n    \"deviceFamilyId\": \"ur2\",\n        \"manufacturer\": \"Acme\",\n    \"manufacturerModel\": \"CableBox Pro\",\n    \"osName\": \"Android TV\",\n    \"osVersion\": \"10\",\n    \"appVersion\": \"1.5.7\",\n    \"friendlyName\": \"Room STB 3\",\n    \"drmLevel\": \"L3\",\n    \"drmType\": \"Widevine\",\n    \"ottType\": \"Hybrid\",\n    \"fullType\": \"DVB-C Hybrid\",\n    \"deviceFullType\": \"CableBox Pro DVB-C\",\n    \"managed\": true,\n    \"maxResolution\": 1080,\n \"audioCodecEac3\": true,\n \"audioCodecAc3\": true,\n \"videoCodecHevc\": true,\n    \"lastConnectedTime\": 1710333100,\n    \"enabled\": true,\n    \"hwAddress\": \"00:1D:3F:4B:5C:55\",\n    \"lnbType\": \"None\",\n    \"lnbLoFreq\": 0,\n    \"softwareVersion\": \"3.3.1\",\n    \"rainFadeCompensationType\": \"None\",\n    \"netflixEsn\": \"JKL-STB-10941162975\",\n    \"deviceSerialNumber\": \"SN10941162975\",\n    \"vsmc\": \"70941162975\",\n    \"operatorPrefix\": \"GHI\",\n    \"cdsn\": \"10941162975\"\n  },\n  {\n    \"deviceId\": \"f53e3496-b392-410a-91a6-1a5cefe33973\",\n    \"deviceFamilyId\": \"ur2\",\n        \"manufacturer\": \"Acme\",\n    \"manufacturerModel\": \"CableBox Pro\",\n    \"osName\": \"Android TV\",\n    \"osVersion\": \"10\",\n    \"appVersion\": \"1.5.7\",\n    \"friendlyName\": \"Room STB 4\",\n    \"drmLevel\": \"L3\",\n    \"drmType\": \"Widevine\",\n    \"ottType\": \"Hybrid\",\n    \"fullType\": \"DVB-C Hybrid\",\n    \"deviceFullType\": \"CableBox Pro DVB-C\",\n    \"managed\": true,\n    \"maxResolution\": 1080,\n \"audioCodecEac3\": true,\n \"audioCodecAc3\": true,\n \"videoCodecHevc\": true,\n   \"lastConnectedTime\": 1710333100,\n    \"enabled\": true,\n    \"hwAddress\": \"00:1D:3F:4B:5C:94\",\n    \"lnbType\": \"None\",\n    \"lnbLoFreq\": 0,\n    \"softwareVersion\": \"3.3.1\",\n    \"rainFadeCompensationType\": \"None\",\n    \"netflixEsn\": \"JKL-STB-76175324260\",\n    \"deviceSerialNumber\": \"SN76175324260\",\n    \"vsmc\": \"76175324260\",\n    \"operatorPrefix\": \"GHI\",\n    \"cdsn\": \"76175324260\"\n  },\n  {\n    \"deviceId\": \"5e51987b-2e6f-4074-94a8-095d10e11e6b\",\n    \"deviceFamilyId\": \"ur2\",\n        \"manufacturer\": \"Acme\",\n    \"manufacturerModel\": \"CableBox Pro\",\n    \"osName\": \"Android TV\",\n    \"osVersion\": \"10\",\n    \"appVersion\": \"1.5.7\",\n    \"friendlyName\": \"Room STB 5\",\n    \"drmLevel\": \"L3\",\n    \"drmType\": \"Widevine\",\n    \"ottType\": \"Hybrid\",\n    \"fullType\": \"DVB-C Hybrid\",\n    \"deviceFullType\": \"CableBox Pro DVB-C\",\n    \"managed\": true,\n    \"audioCodecEac3\": true,\n \"audioCodecAc3\": true,\n \"videoCodecHevc\": true,\n   \"lastConnectedTime\": 1710333100,\n    \"enabled\": true,\n    \"hwAddress\": \"00:1D:3F:4B:5C:32\",\n    \"lnbType\": \"None\",\n    \"lnbLoFreq\": 0,\n    \"softwareVersion\": \"3.3.1\",\n    \"rainFadeCompensationType\": \"None\",\n    \"netflixEsn\": \"JKL-STB-34131459433\",\n    \"deviceSerialNumber\": \"SN34131459433\",\n    \"vsmc\": \"74131459433\",\n    \"operatorPrefix\": \"GHI\",\n    \"cdsn\": \"34131459433\"\n  },\n  {\n    \"deviceId\": \"deb46e9f-10ab-48ae-a2d3-fef6b8f1a90f\",\n    \"deviceFamilyId\": \"ur2\",\n        \"manufacturer\": \"Acme\",\n    \"manufacturerModel\": \"CableBox Pro\",\n    \"osName\": \"Android TV\",\n    \"osVersion\": \"10\",\n    \"appVersion\": \"1.5.7\",\n    \"friendlyName\": \"Room STB 6\",\n    \"drmLevel\": \"L3\",\n    \"drmType\": \"Widevine\",\n    \"ottType\": \"Hybrid\",\n    \"fullType\": \"DVB-C Hybrid\",\n    \"deviceFullType\": \"CableBox Pro DVB-C\",\n    \"managed\": true,\n    \"maxResolution\": 1080,\n \"audioCodecEac3\": true,\n \"audioCodecAc3\": true,\n \"videoCodecHevc\": true,\n    \"lastConnectedTime\": 1710333100,\n    \"enabled\": true,\n    \"hwAddress\": \"00:1D:3F:4B:5C:93\",\n    \"lnbType\": \"None\",\n    \"lnbLoFreq\": 0,\n    \"softwareVersion\": \"3.3.1\",\n    \"rainFadeCompensationType\": \"None\",\n    \"netflixEsn\": \"JKL-STB-58414251479\",\n    \"deviceSerialNumber\": \"SN58414251479\",\n    \"vsmc\": \"78414251479\",\n    \"operatorPrefix\": \"GHI\",\n    \"cdsn\": \"58414251479\"\n  },\n  {\n    \"deviceId\": \"a1759b85-b002-4cc7-bf66-94efd62ab0a7\",\n    \"deviceFamilyId\": \"ur2\",\n        \"manufacturer\": \"Acme\",\n    \"manufacturerModel\": \"CableBox Pro\",\n    \"osName\": \"Android TV\",\n    \"osVersion\": \"10\",\n    \"appVersion\": \"1.5.7\",\n    \"friendlyName\": \"Room STB 7\",\n    \"drmLevel\": \"L3\",\n    \"drmType\": \"Widevine\",\n    \"ottType\": \"Hybrid\",\n    \"fullType\": \"DVB-C Hybrid\",\n    \"deviceFullType\": \"CableBox Pro DVB-C\",\n    \"managed\": true,\n    \"maxResolution\": 1080,\n \"audioCodecEac3\": true,\n \"audioCodecAc3\": true,\n \"videoCodecHevc\": true,\n   \"lastConnectedTime\": 1710333100,\n    \"enabled\": true,\n    \"hwAddress\": \"00:1D:3F:4B:5C:12\",\n    \"lnbType\": \"None\",\n    \"lnbLoFreq\": 0,\n    \"softwareVersion\": \"3.3.1\",\n    \"rainFadeCompensationType\": \"None\",\n    \"netflixEsn\": \"JKL-STB-52553940982\",\n    \"deviceSerialNumber\": \"SN52553940982\",\n    \"vsmc\": \"72553940982\",\n    \"operatorPrefix\": \"GHI\",\n    \"cdsn\": \"52553940982\"\n  },\n  {\n    \"deviceId\": \"0d802649-f9b7-4357-9e3f-fb86f1f87451\",\n    \"deviceFamilyId\": \"ur2\",\n        \"manufacturer\": \"Acme\",\n    \"manufacturerModel\": \"CableBox Pro\",\n    \"osName\": \"Android TV\",\n    \"osVersion\": \"10\",\n    \"appVersion\": \"1.5.7\",\n    \"friendlyName\": \"Room STB 8\",\n    \"drmLevel\": \"L3\",\n    \"drmType\": \"Widevine\",\n    \"ottType\": \"Hybrid\",\n    \"fullType\": \"DVB-C Hybrid\",\n    \"deviceFullType\": \"CableBox Pro DVB-C\",\n    \"managed\": true,\n    \"maxResolution\": 1080,\n \"audioCodecEac3\": true,\n \"audioCodecAc3\": true,\n \"videoCodecHevc\": true,\n   \"lastConnectedTime\": 1710333100,\n    \"enabled\": true,\n    \"hwAddress\": \"00:1D:3F:4B:5C:64\",\n    \"lnbType\": \"None\",\n    \"lnbLoFreq\": 0,\n    \"softwareVersion\": \"3.3.1\",\n    \"rainFadeCompensationType\": \"None\",\n    \"netflixEsn\": \"JKL-STB-93838347868\",\n    \"deviceSerialNumber\": \"SN93838347868\",\n    \"vsmc\": \"73838347868\",\n    \"operatorPrefix\": \"GHI\",\n    \"cdsn\": \"93838347868\"\n  },\n  {\n    \"deviceId\": \"8ee23ce8-939f-45ff-9057-4e88bc15ceca\",\n    \"deviceFamilyId\": \"ur2\",\n        \"manufacturer\": \"Acme\",\n    \"manufacturerModel\": \"CableBox Pro\",\n    \"osName\": \"Android TV\",\n    \"osVersion\": \"10\",\n    \"appVersion\": \"1.5.7\",\n    \"friendlyName\": \"Room STB 9\",\n    \"drmLevel\": \"L3\",\n    \"drmType\": \"Widevine\",\n    \"ottType\": \"Hybrid\",\n    \"fullType\": \"DVB-C Hybrid\",\n    \"deviceFullType\": \"CableBox Pro DVB-C\",\n    \"managed\": true,\n    \"maxResolution\": 1080,\n \"audioCodecEac3\": true,\n \"audioCodecAc3\": true,\n \"videoCodecHevc\": true,\n    \"lastConnectedTime\": 1710333100,\n    \"enabled\": true,\n    \"hwAddress\": \"00:1D:3F:4B:5C:75\",\n    \"lnbType\": \"None\",\n    \"lnbLoFreq\": 0,\n    \"softwareVersion\": \"3.3.1\",\n    \"rainFadeCompensationType\": \"None\",\n    \"netflixEsn\": \"JKL-STB-61046558132\",\n    \"deviceSerialNumber\": \"SN61046558132\",\n    \"vsmc\": \"71046558132\",\n    \"operatorPrefix\": \"GHI\",\n    \"cdsn\": \"61046558132\"\n  },\n  {\n    \"deviceId\": \"e2f669f0-d1dc-409b-ad29-1eac87b79510\",\n    \"deviceFamilyId\": \"ur2\",\n        \"manufacturer\": \"Acme\",\n    \"manufacturerModel\": \"CableBox Pro\",\n    \"osName\": \"Android TV\",\n    \"osVersion\": \"10\",\n    \"appVersion\": \"1.5.7\",\n    \"friendlyName\": \"Room STB 10\",\n    \"drmLevel\": \"L3\",\n    \"drmType\": \"Widevine\",\n    \"ottType\": \"Hybrid\",\n    \"fullType\": \"DVB-C Hybrid\",\n    \"deviceFullType\": \"CableBox Pro DVB-C\",\n    \"managed\": true,\n    \"maxResolution\": \"1080p\",\n    \"lastConnectedTime\": 1710333100,\n    \"enabled\": true,\n    \"hwAddress\": \"00:1D:3F:4B:5C:61\",\n    \"lnbType\": \"None\",\n    \"lnbLoFreq\": 0,\n    \"softwareVersion\": \"3.3.1\",\n    \"rainFadeCompensationType\": \"None\",\n    \"netflixEsn\": \"JKL-STB-59919655775\",\n    \"deviceSerialNumber\": \"SN59919655775\",\n    \"vsmc\": \"79919655775\",\n    \"operatorPrefix\": \"GHI\",\n    \"cdsn\": \"59919655775\",\n   \"hardwareVersion\": \"2.3.1\",\n \"yearOfManufacture\": \"2025\",\n \"weekOfManufacture\": \"43\",\n \"runningSerialNumber\": \"012345\"\n }\n]",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/provisioned-devices/import",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "provisioned-devices",
+                    "import"
+                  ]
+                },
+                "description": "Import a list of provisioned (managed) devices"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Devices",
+          "item": [
+            {
+              "name": "swap-device-in-account",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originalDeviceId\": \"<string>\",\n  \"newDeviceId\": \"<string>\",\n  \"fullType\": \"<string>\",\n  \"bouquetId\": \"<string>\",\n  \"subscriberId\": \"<string>\",\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/swap-device",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "swap-device"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    }
+                  ]
+                },
+                "description": "Swap Device"
+              },
+              "response": []
+            },
+            {
+              "name": "unlink-device-from-account",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}",
+                      "description": "(Required) Device Id"
+                    }
+                  ]
+                },
+                "description": "Unlink Device"
+              },
+              "response": []
+            },
+            {
+              "name": "link-device-to-account",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fullType\": \"<string>\",\n  \"bouquetId\": \"<string>\",\n  \"subscriberId\": \"<string>\",\n  \"enabled\": true,\n  \"entitlements\": [\n    {\n      \"offerId\": \"<string>\",\n      \"startDate\": \"2025-01-01T00:00:00.000Z\",\n      \"endDate\": \"2025-12-31T23:59:59.000Z\",\n      \"priority\": true\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}",
+                      "description": "(Required) Device Id"
+                    }
+                  ]
+                },
+                "description": "Link Device"
+              },
+              "response": []
+            },
+            {
+              "name": "update-device-account",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fullType\": \"<string>\",\n  \"bouquetId\": \"<string>\",\n  \"subscriberId\": \"<string>\",\n  \"enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}",
+                      "description": "(Required) Device Id"
+                    }
+                  ]
+                },
+                "description": "Link Device"
+              },
+              "response": []
+            },
+            {
+              "name": "refresh-entitlements",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId/refresh-entitlements",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId",
+                    "refresh-entitlements"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}"
+                    }
+                  ]
+                },
+                "description": "Refresh account Entitlements"
+              },
+              "response": []
+            },
+            {
+              "name": "refresh-device",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId/refresh",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId",
+                    "refresh"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}"
+                    }
+                  ]
+                },
+                "description": "Refresh account Entitlements"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Device Entitlments (Offers)",
+          "item": [
+            {
+              "name": "add-device-entitlements (offers)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"offerId\": \"<string>\",\n    \"startDate\": \"Current time\",\n    \"endDate\": \"<dateTime>\",\n    \"priority\": true\n  },\n  {\n    \"offerId\": \"<string>\",\n    \"startDate\": \"Current time\",\n    \"endDate\": \"<dateTime>\",\n     \"priority\": true\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId/entitlements",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId",
+                    "entitlements"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}",
+                      "description": "(Required) Device Id"
+                    }
+                  ]
+                },
+                "description": "Add device entitlements"
+              },
+              "response": []
+            },
+            {
+              "name": "update-device-pin",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pin\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId/reset-pin",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId",
+                    "reset-pin"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}",
+                      "description": "(Required) Device Id"
+                    }
+                  ]
+                },
+                "description": "Update Device Pin"
+              },
+              "response": []
+            },
+            {
+              "name": "update-device-entitlement (offer)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offerId\": \"<string>\",\n  \"startDate\": \"2025-01-01T00:00:00.000Z\",\n  \"endDate\": \"2025-12-31T23:59:59.000Z\",\n  \"priority\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId/entitlements/:entitlementId",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId",
+                    "entitlements",
+                    ":entitlementId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}",
+                      "description": "(Required) Device Id"
+                    },
+                    {
+                      "key": "entitlementId",
+                      "value": "{{entitlementId}}",
+                      "description": "(Required) Entitlement Id"
+                    }
+                  ]
+                },
+                "description": "Add device entitlement"
+              },
+              "response": []
+            },
+            {
+              "name": "delete-device-entitlement (offer)",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId/entitlements/:entitlementId?priority=true",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId",
+                    "entitlements",
+                    ":entitlementId"
+                  ],
+                  "query": [
+                    {
+                      "key": "priority",
+                      "value": "true",
+                      "description": "Priority flag"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}",
+                      "description": "(Required) Device Id"
+                    },
+                    {
+                      "key": "entitlementId",
+                      "value": "{{entitlementId}}",
+                      "description": "(Required) Entitlement Id"
+                    }
+                  ]
+                },
+                "description": "Delete device entitlement"
+              },
+              "response": []
+            },
+            {
+              "name": "delete-device-offer",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId/offers/:offerId?priority=true",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId",
+                    "offers",
+                    ":offerId"
+                  ],
+                  "query": [
+                    {
+                      "key": "priority",
+                      "value": "true",
+                      "description": "Priority flag"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}",
+                      "description": "(Required) Device Id"
+                    },
+                    {
+                      "key": "offerId",
+                      "value": "{{offerId}}",
+                      "description": "(Required) Offer Id"
+                    }
+                  ]
+                },
+                "description": "Delete device entitlement"
+              },
+              "response": []
+            },
+            {
+              "name": "delete-all-device-entitlements (offers)",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId/entitlements?priority=true",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId",
+                    "entitlements"
+                  ],
+                  "query": [
+                    {
+                      "key": "priority",
+                      "value": "true",
+                      "description": "Priority flag"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}",
+                      "description": "(Required) Device Id"
+                    }
+                  ]
+                },
+                "description": "Delete All Device Entitlements"
+              },
+              "response": []
+            },
+            {
+              "name": "overwrite-device-entitlements (Sync Entitlements/Offers)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"offerId\": \"<string>\",\n    \"startDate\": \"Current time\",\n    \"endDate\": \"<dateTime>\",\n    \"priority\": true\n  },\n  {\n    \"offerId\": \"<string>\",\n    \"startDate\": \"Current time\",\n    \"endDate\": \"<dateTime>\",\n    \"priority\": true\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/accounts/:accountId/devices/:deviceId/sync-entitlements",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    ":accountId",
+                    "devices",
+                    ":deviceId",
+                    "sync-entitlements"
+                  ],
+                  "variable": [
+                    {
+                      "key": "accountId",
+                      "value": "{{account_id}}",
+                      "description": "(Required) Account Id"
+                    },
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}",
+                      "description": "(Required) Device Id"
+                    }
+                  ]
+                },
+                "description": "Overwrite device entitlements"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Product Catalog",
+          "item": [
+            {
+              "name": "offers",
+              "item": [
+                {
+                  "name": "list-offers",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl_external}}/v1/catalog/offers",
+                      "host": [
+                        "{{baseUrl_external}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "catalog",
+                        "offers"
+                      ],
+                      "query": [
+                        {
+                          "key": "type",
+                          "value": "<string>",
+                          "description": "The type of the offer acceptable values are SVOD, TVOD, Bundle, Free, PPV.",
+                          "disabled": true
+                        },
+                        {
+                          "key": "enabled",
+                          "value": "<boolean>",
+                          "description": "A boolean parameter to check if the offer is enabled or not",
+                          "disabled": true
+                        },
+                        {
+                          "key": "isExpired",
+                          "value": "<boolean>",
+                          "description": "A boolean parameter to check the expiry date of the offer.",
+                          "disabled": true
+                        },
+                        {
+                          "key": "isFuture",
+                          "value": "<boolean>",
+                          "description": "A boolean parameter to check the start date of the offer.",
+                          "disabled": true
+                        },
+                        {
+                          "key": "isSellingExpired",
+                          "value": "<boolean>",
+                          "description": " A boolean parameter to check the selling expiry date of the offer.",
+                          "disabled": true
+                        },
+                        {
+                          "key": "isSellingFuture",
+                          "value": "<boolean>",
+                          "description": "A boolean parameter to check the selling start date of the offer.",
+                          "disabled": true
+                        }
+                      ]
+                    },
+                    "description": "List offers"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "create-offers",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\r\n  {\r\n    \"offerId\": \"123\",\r\n    \"name\": \"My offer\",\r\n    \"type\": \"TVOD\",\r\n    \"startDate\": \"2025-05-08T08:00:00.000Z\",\r\n    \"endDate\": \"2026-05-30T08:00:00.000Z\",\r\n    \"sellingStartDate\": \"2025-05-05T08:00:00.000Z\",\r\n    \"sellingEndDate\": \"2025-05-27T08:00:00.000Z\",\r\n    \"enabled\": true,\r\n    \"internalContentId\": \"123\",\r\n    \"externalContentId\": \"Pack002\",\r\n    \"duration\": \"PT1M\",\r\n    \"price\": \"1.99\",\r\n    \"title\": \"Star Wars\",\r\n    \"isCSAI\": false,\r\n    \"isSSAI\": false,\r\n    \"isAddressable\": false\r\n  }\r\n]",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_external}}/v1/catalog/offers",
+                      "host": [
+                        "{{baseUrl_external}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "catalog",
+                        "offers"
+                      ]
+                    },
+                    "description": "List offers"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "delete-offers",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\r\n  {\r\n    \"offerId\": \"1\",\r\n    \"internalContentId\": \"1\"\r\n  },\r\n  {\r\n    \"offerId\": \"2\"\r\n  }\r\n]",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_external}}/v1/catalog/offers",
+                      "host": [
+                        "{{baseUrl_external}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "catalog",
+                        "offers"
+                      ]
+                    },
+                    "description": "Delete offers"
+                  },
+                  "response": []
+                }
+              ],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      ""
+                    ]
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      ""
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Profiles",
+          "item": [
+            {
+              "name": "swap-avatars",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"originalAvatarId\": \"<string>\",\n    \"newAvatarId\": \"<string>\",\n    \"newAvatarUrl\": \"<string>\"\n }",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/profiles/swap-avatars",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "profiles",
+                    "swap-avatars"
+                  ]
+                },
+                "description": "Swap Avatars"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Settings",
+          "item": [
+            {
+              "name": "Dictionaries",
+              "item": [
+                {
+                  "name": "get-all-dictionary-versions",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_external}}/v1/settings/dictionaries/versions?limit=25",
+                      "host": [
+                        "{{baseUrl_external}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "settings",
+                        "dictionaries",
+                        "versions"
+                      ],
+                      "query": [
+                        {
+                          "key": "limit",
+                          "value": "25"
+                        },
+                        {
+                          "key": "cursor",
+                          "value": "<null>",
+                          "disabled": true
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "get-dictionary-versions",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl_external}}/v1/settings/dictionaries/versions/:version/deviceGroups/:deviceGroupId/languages/:languageIsoCode",
+                      "host": [
+                        "{{baseUrl_external}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "settings",
+                        "dictionaries",
+                        "versions",
+                        ":version",
+                        "deviceGroups",
+                        ":deviceGroupId",
+                        "languages",
+                        ":languageIsoCode"
+                      ],
+                      "variable": [
+                        {
+                          "key": "version",
+                          "value": ""
+                        },
+                        {
+                          "key": "deviceGroupId",
+                          "value": ""
+                        },
+                        {
+                          "key": "languageIsoCode",
+                          "value": ""
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "create-dictionary-versions",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"version\": \"1.0\",\r\n  \"dict.fti.fullReset\": \"Full Reset\",\r\n  \"dict.fti.installationModeReset\": \"Installation Mode Reset\",\r\n  \"dict.fti.preferredLanguage\": \"Menu Language\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl_external}}/v1/settings/dictionaries/versions/:version/deviceGroups/:deviceGroupId/languages/:languageIsoCode",
+                      "host": [
+                        "{{baseUrl_external}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "settings",
+                        "dictionaries",
+                        "versions",
+                        ":version",
+                        "deviceGroups",
+                        ":deviceGroupId",
+                        "languages",
+                        ":languageIsoCode"
+                      ],
+                      "variable": [
+                        {
+                          "key": "version",
+                          "value": ""
+                        },
+                        {
+                          "key": "deviceGroupId",
+                          "value": ""
+                        },
+                        {
+                          "key": "languageIsoCode",
+                          "value": ""
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Global Settings",
+              "item": [
+                {
+                  "name": "get-catalogs-lov",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl_external}}/v1/settings/catalogs",
+                      "host": [
+                        "{{baseUrl_external}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "settings",
+                        "catalogs"
+                      ]
+                    },
+                    "description": "Gets the catalogs lov."
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Global Settings",
+              "item": [
+                {
+                  "name": "get-bouquets-lov",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl_external}}/v1/settings/bouquets",
+                      "host": [
+                        "{{baseUrl_external}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "settings",
+                        "bouquets"
+                      ]
+                    },
+                    "description": "Gets the bouquets lov."
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Device Configuration",
+          "item": [
+            {
+              "name": "list-device-families",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl_external}}/v1/device-families",
+                  "host": [
+                    "{{baseUrl_external}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "device-families"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{external_api_key}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

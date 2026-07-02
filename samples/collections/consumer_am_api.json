@@ -1,0 +1,1869 @@
+{
+  "info": {
+    "_postman_id": "168d86ae-e09b-480e-8aa7-e65363b734b7",
+    "name": "Irdeto Account Manager - Consumer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39668192",
+    "_collection_link": "https://go.postman.co/collection/40231071-168d86ae-e09b-480e-8aa7-e65363b734b7?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "v1",
+      "item": [
+        {
+          "name": "Healthcheck",
+          "item": [
+            {
+              "name": "Healthcheck",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/healthcheck",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "healthcheck"
+                  ]
+                },
+                "description": "Health Check"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Auth",
+          "item": [
+            {
+              "name": "logout",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/logout?id_token_hint={{am_consumer_session_token}}&post_logout_redirect_uri={{logout_redirect_uri}}",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "logout"
+                  ],
+                  "query": [
+                    {
+                      "key": "id_token_hint",
+                      "value": "{{am_consumer_session_token}}",
+                      "description": "am consumer session token"
+                    },
+                    {
+                      "key": "post_logout_redirect_uri",
+                      "value": "{{logout_redirect_uri}}",
+                      "description": "Logout redirect uri"
+                    }
+                  ]
+                },
+                "description": "Logout"
+              },
+              "response": []
+            },
+            {
+              "name": "logout callback",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/logout/callback?state={{post_redirect_uri_state}}",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "logout",
+                    "callback"
+                  ],
+                  "query": [
+                    {
+                      "key": "state",
+                      "value": "{{post_redirect_uri_state}}",
+                      "description": "post redirect uri state"
+                    }
+                  ]
+                },
+                "description": "Logout callback"
+              },
+              "response": []
+            },
+            {
+              "name": "login",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "const CryptoJS = require('crypto-js');\r",
+                      "\r",
+                      "const state = CryptoJS.lib.WordArray.random(16).toString();\r",
+                      "const code_verifier = CryptoJS.lib.WordArray.random(32).toString();\r",
+                      "const code_verifier_sha256 = CryptoJS.SHA256(code_verifier);\r",
+                      "const code_challenge = CryptoJS.enc.Base64.stringify(code_verifier_sha256).replace(/\\+/g, '-')\r",
+                      "      .replace(/\\//g, '_')\r",
+                      "      .replace(/=/g, '');\r",
+                      "\r",
+                      "pm.environment.set('state', state);\r",
+                      "pm.environment.set('code_verifier', code_verifier);\r",
+                      "pm.environment.set('code_challenge', code_challenge);\r",
+                      "console.log('state', state);\r",
+                      "console.log('code_verifier', code_verifier);\r",
+                      "console.log('code_challenge', code_challenge);\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "var jsonData = pm.response.json();\r",
+                      "pm.environment.set(\"am_consumer_session_token\", jsonData.access_token);\r",
+                      "pm.environment.set(\"am_consumer_refresh_token\", jsonData.refresh_token);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "protocolProfileBehavior": {
+                "followRedirects": false
+              },
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/login?code_challenge={{code_challenge}}&code_challenge_method=S256&redirect_uri={{redirect_uri}}&response_type=code&state={{$guid}}",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "login"
+                  ],
+                  "query": [
+                    {
+                      "key": "code_challenge",
+                      "value": "{{code_challenge}}",
+                      "description": "(Required) Code challenge"
+                    },
+                    {
+                      "key": "code_challenge_method",
+                      "value": "S256",
+                      "description": "(Required) Code challenge method"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "{{redirect_uri}}",
+                      "description": "(Required) redirectUri"
+                    },
+                    {
+                      "key": "response_type",
+                      "value": "code",
+                      "description": "(Required) responseType"
+                    },
+                    {
+                      "key": "state",
+                      "value": "{{$guid}}",
+                      "description": "(Required) state"
+                    }
+                  ]
+                },
+                "description": "Login."
+              },
+              "response": []
+            },
+            {
+              "name": "token - login session",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "var jsonData = pm.response.json();\r",
+                      "pm.environment.set(\"am_consumer_session_token\", jsonData.access_token);\r",
+                      "pm.environment.set(\"am_consumer_refresh_token\", jsonData.refresh_token);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "packages": {},
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:authorization_code"
+                    },
+                    {
+                      "key": "code",
+                      "value": ""
+                    },
+                    {
+                      "key": "code_verifier",
+                      "value": "{{code_verifier}}"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "{{redirect_uri}}"
+                    },
+                    {
+                      "key": "device_id",
+                      "value": "{{device_id}}"
+                    },
+                    {
+                      "key": "device_details",
+                      "value": "{{device_details}}"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/token",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "token"
+                  ]
+                },
+                "description": "Serves profile session token in profile selection, and login session token/profile session token when refreshing."
+              },
+              "response": []
+            },
+            {
+              "name": "token - profile selection",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "var jsonData = pm.response.json();\r",
+                      "pm.environment.set(\"am_consumer_session_token\", jsonData.access_token);\r",
+                      "pm.environment.set(\"am_consumer_refresh_token\", jsonData.refresh_token);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:token_exchange"
+                    },
+                    {
+                      "key": "profile_id",
+                      "value": "{{profile_id}}",
+                      "type": "text"
+                    },
+                    {
+                      "key": "pin",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "key": "subject_token",
+                      "value": "{{am_consumer_session_token}}",
+                      "type": "text"
+                    },
+                    {
+                      "key": "subject_token_type",
+                      "value": "Bearer",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/token",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "token"
+                  ]
+                },
+                "description": "Serves profile session token in profile selection, and login session token/profile session token when refreshing."
+              },
+              "response": []
+            },
+            {
+              "name": "token - session refresh",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "var jsonData = pm.response.json();\r",
+                      "pm.environment.set(\"am_consumer_session_token\", jsonData.access_token);\r",
+                      "pm.environment.set(\"am_consumer_refresh_token\", jsonData.refresh_token);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:refresh_token"
+                    },
+                    {
+                      "key": "refresh_token",
+                      "value": "{{am_consumer_refresh_token}}",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/token",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "token"
+                  ]
+                },
+                "description": "Serves profile session token in profile selection, and login session token/profile session token when refreshing."
+              },
+              "response": []
+            },
+            {
+              "name": "token - guest login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "var jsonData = pm.response.json();\r",
+                      "pm.environment.set(\"am_consumer_session_token\", jsonData.access_token);\r",
+                      "pm.environment.set(\"am_consumer_refresh_token\", jsonData.refresh_token);"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "urn:irx-am:params:oauth:grant-type:guest_login"
+                    },
+                    {
+                      "key": "device_id",
+                      "value": "{{device_id}}"
+                    },
+                    {
+                      "key": "device_details",
+                      "value": "{{device_details}}"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/token",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "token"
+                  ]
+                },
+                "description": "Serves profile session token in profile selection, and login session token/profile session token when refreshing."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Device Auth",
+          "item": [
+            {
+              "name": "device-authorization",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "device_id",
+                      "value": "{{device_id}}",
+                      "type": "text"
+                    },
+                    {
+                      "key": "device_details",
+                      "value": "{{device_details}}",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/device/authorize",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "device",
+                    "authorize"
+                  ]
+                },
+                "description": "Device authorization"
+              },
+              "response": []
+            },
+            {
+              "name": "device-token",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:device_code",
+                      "description": "(Required) "
+                    },
+                    {
+                      "key": "device_code",
+                      "value": "{{device_code}}",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/device/token",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "device",
+                    "token"
+                  ]
+                },
+                "description": "Device token"
+              },
+              "response": []
+            },
+            {
+              "name": "device-validation",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{am_consumer_session_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/device/validate?user_code={{user_code}}",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "device",
+                    "validate"
+                  ],
+                  "query": [
+                    {
+                      "key": "user_code",
+                      "value": "{{user_code}}",
+                      "description": "(Required) User Code"
+                    }
+                  ]
+                },
+                "description": "Device validation"
+              },
+              "response": []
+            },
+            {
+              "name": "device-logout",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/device/logout?id_token_hint={{am_consumer_session_token}}",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "device",
+                    "logout"
+                  ],
+                  "query": [
+                    {
+                      "key": "id_token_hint",
+                      "value": "{{am_consumer_session_token}}",
+                      "description": "am consumer session token"
+                    }
+                  ]
+                },
+                "description": "Logout"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Express Auth",
+          "item": [
+            {
+              "name": "express-token",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Device-Id",
+                    "value": "{{device_id}}",
+                    "description": "(Required) Device Id"
+                  },
+                  {
+                    "key": "Device-Details",
+                    "value": "{{device_detiels}}",
+                    "description": "(Required) Device Details"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "urn:ietf:params:oauth:grant-type:authorization_code",
+                      "type": "text",
+                      "uuid": "c2a838ad-b2e2-4e61-8197-235cf95b1ec9"
+                    },
+                    {
+                      "key": "code",
+                      "value": "{{express_token_code}}",
+                      "type": "text",
+                      "uuid": "343afe2c-b7d2-4c6a-9b8f-c61e6a1d5a96"
+                    },
+                    {
+                      "key": "device_id",
+                      "value": "{{device_id}}",
+                      "type": "text",
+                      "uuid": "d92bbfa9-ffc4-4a40-ad42-628e487e11ed"
+                    },
+                    {
+                      "key": "device_details",
+                      "value": "{{device_details}}",
+                      "type": "text",
+                      "uuid": "7d3499bf-80a8-4832-9a76-746a662fd781"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/express/token",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "express",
+                    "token"
+                  ]
+                },
+                "description": "Express token"
+              },
+              "response": []
+            },
+            {
+              "name": "express-callback",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/express/callback?code=<string>&state=<string>",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "express",
+                    "callback"
+                  ],
+                  "query": [
+                    {
+                      "key": "code",
+                      "value": "<string>",
+                      "description": "(Required) code"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Express callback"
+              },
+              "response": []
+            },
+            {
+              "name": "express-login",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/auth/express?data={{express_auth_data}}",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "auth",
+                    "express"
+                  ],
+                  "query": [
+                    {
+                      "key": "data",
+                      "value": "{{express_auth_data}}",
+                      "description": "(Required) encoded_smctimestamp"
+                    }
+                  ]
+                },
+                "description": "Express Login"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Devices",
+          "item": [
+            {
+              "name": "migration",
+              "item": [
+                {
+                  "name": "get-wpe-migration-url",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_consumer}}/v1/devices/migration/wpe-url",
+                      "host": [
+                        "{{baseUrl_consumer}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "devices",
+                        "migration",
+                        "wpe-url"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "update-wpe-migration-status",
+                  "request": {
+                    "method": "PUT",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl_consumer}}/v1/devices/migration/wpe-url/:status",
+                      "host": [
+                        "{{baseUrl_consumer}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "devices",
+                        "migration",
+                        "wpe-url",
+                        ":status"
+                      ],
+                      "variable": [
+                        {
+                          "key": "status",
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "delete-device",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/devices/:deviceId",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "deviceId",
+                      "value": "{{device_id}}"
+                    }
+                  ]
+                },
+                "description": "Delete Device"
+              },
+              "response": []
+            },
+            {
+              "name": "list-all-devices",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/devices?limit=25",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "devices"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25",
+                      "description": "The number of items to return per page."
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "cursor_value",
+                      "description": "The cursor value.",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "List Devices"
+              },
+              "response": []
+            },
+            {
+              "name": "delete-all-devices",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/devices",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "devices"
+                  ]
+                },
+                "description": "Delete all Devices"
+              },
+              "response": []
+            },
+            {
+              "name": "update-device",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "  {\n    \"appVersion\": \"1.5.7\",\n    \"friendlyName\": \"Room STB 1\",\n    \"manufacturer\": \"Acme\",\n    \"osName\": \"Linux\",\n    \"osVersion\": \"5.4.0-42-generic\",\n    \"manufacturerModel\": \"CableBox Pro\",\n    \"maxResolution\": 1080\n  }",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/devices/:deviceId",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "devices",
+                    ":deviceId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "deviceId",
+                      "value": ""
+                    }
+                  ]
+                },
+                "description": "Update Device."
+              },
+              "response": []
+            },
+            {
+              "name": "device-attestation",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/devices/attestation",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "devices",
+                    "attestation"
+                  ]
+                },
+                "description": "Device Attestation."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Profiles",
+          "item": [
+            {
+              "name": "get-profile",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/profiles/:profileId",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "profileId",
+                      "value": "{{profile_id}}"
+                    }
+                  ]
+                },
+                "description": "Get Profile"
+              },
+              "response": []
+            },
+            {
+              "name": "update-profile",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"avatarId\": \"<string>\",\n  \"avatarUrl\": \"<string>\",\n  \"interfacePreferences\": {\n    \"languageId\": \"<string>\"\n  },\n  \"videoPreferences\": {\n    \"resolutionId\": \"<string>\",\n    \"bitrateId\": \"<string>\"\n  },\n  \"audioPreferences\": {\n    \"bitrateId\": \"<string>\",\n    \"languageId\": \"<string>\"\n  },\n  \"metadataPreferences\": {\n    \"languageId\": \"<string>\"\n  },\n  \"subtitlePreferences\": {\n    \"enabled\": \"<boolean>\",\n    \"languageId\": \"<string>\"\n  },\n  \"parentalRating\": {\n    \"parentalRatingId\": \"<string>\"\n  },\n  \"maxSessionTime\": \"<integer>\",\n  \"streamingQuality\": \"<string>\",\n  \"contentPreferences\": \"<string>\",\n  \"contentPreferencesSkipped\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/profiles/:profileId",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "profileId",
+                      "value": "testProfile"
+                    }
+                  ]
+                },
+                "description": "Update Profile"
+              },
+              "response": []
+            },
+            {
+              "name": "delete-profile",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/profiles/:profileId",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "profiles",
+                    ":profileId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "profileId",
+                      "value": "{{profile_id}}"
+                    }
+                  ]
+                },
+                "description": "Delete Profile"
+              },
+              "response": []
+            },
+            {
+              "name": "list-all-profiles",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/profiles",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "profiles"
+                  ]
+                },
+                "description": "List Profiles"
+              },
+              "response": []
+            },
+            {
+              "name": "create-profile",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"avatarId\": \"<string>\",\n  \"avatarUrl\": \"<string>\",\n  \"interfacePreferences\": {\n    \"languageId\": \"<string>\"\n },\n  \"videoPreferences\": {\n    \"resolutionId\": \"<string>\",\n    \"bitrateId\": \"<string>\"\n  },\n  \"audioPreferences\": {\n    \"bitrateId\": \"<string>\",\n    \"languageId\": \"<string>\"\n  },\n  \"metadataPreferences\": {\n    \"languageId\": \"<string>\"\n  },\n  \"subtitlePreferences\": {\n    \"enabled\": \"<boolean>\",\n    \"languageId\": \"<string>\"\n  },\n  \"parentalRating\": {\n    \"parentalRatingId\": \"<string>\"\n  },\n  \"maxSessionTime\": \"<integer>\",\n  \"streamingQuality\": \"<string>\",\n  \"contentPreferences\": \"<string>\",\n  \"contentPreferencesSkipped\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/profiles",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "profiles"
+                  ]
+                },
+                "description": "Create Profile"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Entitlements",
+          "item": [
+            {
+              "name": "list-all-entitlements",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/entitlements",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "entitlements"
+                  ]
+                },
+                "description": "List entitlements"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Configuration",
+          "item": [
+            {
+              "name": "get-device-configuration",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/configuration/:configurationKey",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "configuration",
+                    ":configurationKey"
+                  ],
+                  "query": [
+                    {
+                      "key": "contents",
+                      "value": "[\"experience\",\"configuration\"]",
+                      "description": "Filter the results by content",
+                      "disabled": true
+                    },
+                    {
+                      "key": "language",
+                      "value": "\"eng\"",
+                      "description": "Language id to retrieve the UI Dictionary data.",
+                      "disabled": true
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "configurationKey",
+                      "value": "{{configurationKey}}",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Get device configuration"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "List of Values (lov)",
+          "item": [
+            {
+              "name": "list-of-values-for-profile",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/lov/profile",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "lov",
+                    "profile"
+                  ]
+                },
+                "description": "Profile list of values"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Accounts",
+          "item": [
+            {
+              "name": "update-pin",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"oldPin\": \"0000\",\n    \"newPin\": \"1111\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/accounts",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts"
+                  ]
+                },
+                "description": "Update account PIN"
+              },
+              "response": []
+            },
+            {
+              "name": "validate-pin",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pin\": \"7951\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/accounts/validate-pin",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "validate-pin"
+                  ]
+                },
+                "description": "Validate account PIN"
+              },
+              "response": []
+            },
+            {
+              "name": "pin-status",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/accounts/pin-status",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "pin-status"
+                  ]
+                },
+                "description": "PIN Status"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "well-known",
+          "item": [
+            {
+              "name": "jwks",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/.well-known/jwks.json",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    ".well-known",
+                    "jwks.json"
+                  ]
+                },
+                "description": "JSON Web Key Set"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Transactions",
+          "item": [
+            {
+              "name": "initiate-transaction",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\"pin\": \"0000\",\"offers\":[{\"offerId\": \"<string>\",\"entitledAt\": \"<string>\"}]}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/transactions",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "transactions"
+                  ]
+                },
+                "description": "Initiate transaction TVOD"
+              },
+              "response": []
+            },
+            {
+              "name": "list-transactions",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/transactions",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "transactions"
+                  ]
+                },
+                "description": "List all TVOD transactions"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "CDVR Recordings",
+          "item": [
+            {
+              "name": "schedule-recording",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channelId\": \"<string>\",\n  \"date\": \"<string>\",\n  \"eventId\": \"<string>\",\n  \"groupKey\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/activities/recordings",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "activities",
+                    "recordings"
+                  ]
+                },
+                "description": "Schedule a single event recording or series recording"
+              },
+              "response": []
+            },
+            {
+              "name": "schedule-series-recording",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channelId\": \"<string>\",\n  \"date\": \"<string>\",\n  \"groupKey\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/activities/recordings",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "activities",
+                    "recordings"
+                  ]
+                },
+                "description": "Schedule a series recording using groupKey"
+              },
+              "response": []
+            },
+            {
+              "name": "list-recordings",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/activities/recordings?limit=10&language=eng",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "activities",
+                    "recordings"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Maximum number of recordings to return (optional, default: 10)"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "",
+                      "description": "Pagination cursor (optional)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "search",
+                      "value": "",
+                      "description": "Search recordings by title (case-insensitive substring match, optional)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "language",
+                      "value": "eng",
+                      "description": "Language for event data"
+                    },
+                    {
+                      "key": "status",
+                      "value": "",
+                      "description": "Allowed values are available and scheduled(optional)",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "List all recordings with pagination"
+              },
+              "response": []
+            },
+            {
+              "name": "query-recordings",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/activities/recordings/query?date=2024-12-25&limit=10",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "activities",
+                    "recordings",
+                    "query"
+                  ],
+                  "query": [
+                    {
+                      "key": "channelIds",
+                      "value": "",
+                      "description": "Comma-separated channel IDs (OR filter)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "eventIds",
+                      "value": "",
+                      "description": "Comma-separated event IDs (OR filter)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "groupKeys",
+                      "value": "",
+                      "description": "Comma-separated group keys (OR filter)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "date",
+                      "value": "2024-12-25",
+                      "description": "Date filter (YYYY-MM-DD). Applied as AND with other filters"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Maximum number of recordings to return (optional, default: 25)"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "",
+                      "description": "Pagination cursor (optional)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "status",
+                      "value": "",
+                      "description": "Allowed values are available and scheduled(optional)",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Query recordings with minimal fields only (OR filters; date is AND when provided). Response includes count, data, and nextCursor."
+              },
+              "response": []
+            },
+            {
+              "name": "get-recording",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/activities/recordings/:recordingId",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "activities",
+                    "recordings",
+                    ":recordingId"
+                  ],
+                  "query": [
+                    {
+                      "key": "language",
+                      "value": "eng",
+                      "description": "Language for event data (optional)",
+                      "disabled": true
+                    },
+                    {
+                      "key": "status",
+                      "value": "",
+                      "description": "Allowed values are available and scheduled(optional)",
+                      "disabled": true
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "recordingId",
+                      "value": "rec-001",
+                      "description": "Recording ID"
+                    }
+                  ]
+                },
+                "description": "Get recording details including playback URLs (for completed recordings)"
+              },
+              "response": []
+            },
+            {
+              "name": "delete-recording",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/activities/recordings?recordingIds=rec-001,rec-002,rec-003&groupKeys=443883,443884,553884",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "activities",
+                    "recordings"
+                  ],
+                  "query": [
+                    {
+                      "key": "recordingIds",
+                      "value": "rec-001,rec-002,rec-003",
+                      "description": "Recording IDs (comma separated)"
+                    },
+                    {
+                      "key": "groupKeys",
+                      "value": "443883,443884,553884",
+                      "description": "Group Keys of the recordings to be deleted(comma separated)"
+                    }
+                  ]
+                },
+                "description": "Delete a recording"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Generator",
+          "item": [
+            {
+              "name": "generator",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl_consumer}}/v1/generator?contents=[\"ad.metadata\",\"ad.linear.addressable-config\",\"ad.linear.addressable-template\",\"ad.linear.ssai-template\",\"ad.linear.csai-template\",\"ad.vod.csai-template\"]",
+                  "host": [
+                    "{{baseUrl_consumer}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "generator"
+                  ],
+                  "query": [
+                    {
+                      "key": "contents",
+                      "value": "[\"ad.metadata\",\"ad.linear.addressable-config\",\"ad.linear.addressable-template\",\"ad.linear.ssai-template\",\"ad.linear.csai-template\",\"ad.vod.csai-template\"]"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{am_consumer_session_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
