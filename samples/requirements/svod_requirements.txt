@@ -1,0 +1,158 @@
+# ============================================================
+# Account Manager — QA Nexus Sample Requirements File
+# Source: Irdeto MM Project — Internal, External, Consumer APIs
+# ============================================================
+# Format: Each REQ covers one behaviour.
+# API requirements include HTTP method + endpoint.
+# UI requirements include element + action + expected state.
+# ============================================================
+ 
+ 
+# ------------------------------------------------------------
+# SECTION 1: SVOD OFFER MANAGEMENT (Internal API)
+# Chain: TC-01 → TC-03 → TC-04 (create → get → update)
+# ------------------------------------------------------------
+
+ 
+REQ-001: The internal API shall allow creation of a SVOD offer via
+POST /v1/offers with a payload containing offerId, name, type SVOD,
+startDate, endDate, and enabled true. On success the API shall return
+HTTP 200 with a response body containing the matching offerId and name.
+ 
+REQ-002: The internal API shall return HTTP 200 and a response body
+containing offerId, name, type, and enabled fields all matching the
+created offer when GET /v1/offers/{offerId} is called with a valid
+offerId. Precondition: offer must have been created successfully.
+ 
+REQ-003: The internal API shall allow updating an existing SVOD offer
+via PUT /v1/offers/{offerId} with a modified payload such as changed
+description or name. The API shall return HTTP 200 confirming the
+updated fields. A subsequent GET on the same offerId shall return the
+updated values confirming persistence.
+ 
+REQ-004: The internal API shall return HTTP 401 when POST /v1/offers
+is called without a valid internal access token.
+ 
+REQ-005: The internal API shall return HTTP 400 when POST /v1/offers
+is called with a missing required field such as offerId or type.
+ 
+ 
+# ------------------------------------------------------------
+# SECTION 2: ENTITLEMENT MANAGEMENT
+# Chain: TC-01 → TC-05 → TC-06 → TC-07 → TC-08
+# create offer → add entitlement → verify via external → internal → consumer
+# ------------------------------------------------------------
+ 
+REQ-006: The external API shall allow adding an offer as an entitlement
+to an account via POST /v1/accounts/{accountId}/entitlements with a
+payload referencing a valid offerId. The API shall return HTTP 200
+confirming the entitlement is successfully linked to the account.
+Precondition: a valid accountId exists and offer has been created.
+ 
+REQ-007: The external API shall return HTTP 200 when
+GET /v1/accounts/{accountId} is called for an account that has an
+entitlement linked. The response body entitlements array shall contain
+an entry with the created offerId.
+ 
+REQ-008: The internal API shall return HTTP 200 when
+GET /v1/accounts/{accountId}/entitlements is called. The response body
+shall contain the offerId in the entitlements list.
+Precondition: entitlement has been added via external API.
+ 
+REQ-009: The consumer API shall return HTTP 200 when
+GET /v1/entitlements is called with a valid consumer session token.
+The response entitlements list shall contain the offerId added to the
+account. Precondition: consumer session token obtained for the same
+account.
+ 
+REQ-010: The external API shall return HTTP 404 when
+POST /v1/accounts/{accountId}/entitlements is called with an
+accountId that does not exist.
+ 
+REQ-011: The external API shall return HTTP 400 when
+POST /v1/accounts/{accountId}/entitlements is called with a payload
+referencing an offerId that does not exist.
+ 
+ 
+# ------------------------------------------------------------
+# SECTION 3: ACCOUNT ENTITLEMENTS REFRESH (Internal API + OPC UI)
+# ------------------------------------------------------------
+ 
+REQ-012: The internal API shall return HTTP 200 when
+POST /v1/accounts/{accountId}/refresh-entitlements is called with a
+valid accountId. The response shall confirm the refresh request was
+accepted successfully.
+Precondition: valid account exists.
+ 
+REQ-013: The OPC UI shall display a success toaster message after the
+refresh entitlements action is triggered from the Entitlements tab.
+The user shall navigate to Household Section, search a valid household
+id, go to Entitlements tab and click the Refresh Entitlements button.
+The toaster shall appear confirming success.
+ 
+REQ-014: The internal API shall return HTTP 404 when
+POST /v1/accounts/{accountId}/refresh-entitlements is called with an
+invalid or non-existent accountId.
+ 
+ 
+# ------------------------------------------------------------
+# SECTION 4: DEVICE MANAGEMENT (Internal API + OPC UI)
+# Chain: device refresh and device entitlement refresh
+# ------------------------------------------------------------
+ 
+REQ-015: The internal API shall return HTTP 200 when
+POST /v1/accounts/{accountId}/devices/{deviceId}/refresh is called
+with a valid accountId and deviceId.
+Precondition: valid device is linked to the account.
+ 
+REQ-016: The OPC UI shall display a success toaster message after the
+device refresh action is triggered. The user shall navigate to
+Household Section, search a valid household id, go to the Device tab,
+and click the Refresh icon for any managed device. The toaster shall
+confirm the device refresh succeeded.
+ 
+REQ-017: The internal API shall return HTTP 200 when
+POST /v1/accounts/{accountId}/devices/{deviceId}/refresh-entitlements
+is called with a valid accountId and deviceId.
+Precondition: valid device is linked to the account.
+ 
+REQ-018: The OPC UI shall display a success toaster message after
+clicking the Refresh Entitlement button from the device view. The user
+shall navigate to Household Section, search a valid household id, go
+to Device tab, click view icon for a managed device, click
+Entitlements button, then click Refresh Entitlement Button.
+ 
+REQ-019: The internal API shall return HTTP 404 when
+POST /v1/accounts/{accountId}/devices/{deviceId}/refresh is called
+with a deviceId that is not linked to the given account.
+ 
+REQ-020: The internal API shall return HTTP 401 when
+POST /v1/accounts/{accountId}/devices/{deviceId}/refresh is called
+without a valid access token.
+ 
+ 
+# ------------------------------------------------------------
+# SECTION 5: OPC UI — NAVIGATION AND SEARCH (UI Tests)
+# ------------------------------------------------------------
+ 
+REQ-021: The OPC login page shall allow a user to login with valid
+internal credentials. On successful login the user shall be redirected
+to the OPC dashboard.
+ 
+REQ-022: The Household Section shall be accessible from the OPC
+navigation menu after login. Clicking the Household Section link shall
+navigate the user to the Household search page.
+ 
+REQ-023: The Household search page shall display a search input field.
+Entering a valid household id and submitting the search shall display
+the matching household record.
+ 
+REQ-024: The household detail view shall display a Device tab and an
+Entitlements tab. Clicking the Device tab shall show the list of
+managed devices for that household.
+ 
+REQ-025: The OPC UI shall display an error message when a search is
+performed with an invalid or non-existent household id. The error
+message shall appear below the search field without refreshing the
+page.
+ 
