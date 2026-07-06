@@ -13,10 +13,10 @@ Usage from main.py:
     from src.graph import build_graph
     graph = build_graph()
     result = graph.invoke({
-        "filepath": "samples/requirements/svod_offer_internal_requirements.txt",
+        "filepath": "samples/requirements/svod_requirements.txt",
         "collection_path": "samples/collections/postman_collection.json",
         "auth_collection_path": "samples/collections/demo_examples.json",
-        "environment_path": "samples/environments/staging.json",
+        "environment_path": "samples/environments/test.json",
         "app_url": "https://staging-opc.irdeto.com",
     })
 """
@@ -33,22 +33,28 @@ from langgraph.graph import StateGraph, END
 class TestGenState(TypedDict):
 
     # ── Inputs ───────────────────────────────────────────────
-    filepath: Optional[str]              # requirements doc path
-    collection_path: Optional[str]       # postman feature collection
-    auth_collection_path: Optional[str]  # demo_examples.json
-    environment_path: Optional[str]      # dev.json / staging.json
-    app_url: Optional[str]               # for UI test generation
-    env_name: Optional[str]              # dev / staging / prod
+    filepath: Optional[str]                  # svod_requirements.txt
+    internal_collection_path: Optional[str]  # internal_am_api.json
+    external_collection_path: Optional[str]  # external_am_api.json
+    consumer_collection_path: Optional[str]  # consumer_am_api.json
+    auth_collection_path: Optional[str]      # demo_examples.json
+    environment_path: Optional[str]          # staging.json
+    app_url: Optional[str]
+    env_name: Optional[str]
 
     # ── After resolve_environment ────────────────────────────
-    resolved_collection: Optional[dict]
+    resolved_internal: Optional[dict]        # internal with real values
+    resolved_external: Optional[dict]        # external with real values
+    resolved_consumer: Optional[dict]        # consumer with real values
     variables: dict
 
     # ── After load_document ──────────────────────────────────
     chunks: List[str]
 
     # ── After parse_collection ───────────────────────────────
-    endpoints: List[dict]
+    internal_endpoints: List[dict]
+    external_endpoints: List[dict]
+    consumer_endpoints: List[dict]
     auth_endpoints: List[dict]
 
     # ── After build_chain_graph ──────────────────────────────
